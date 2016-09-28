@@ -3,9 +3,10 @@ from hand import Hand
 class BlackJack:
 
     def __init__(self):
-        self.single = []
         self.player = []
         self.dealer = []
+        self.player_score = []
+        self.dealer_score = []
         self.max_hand = 2
 
     def dealer_hand(self):
@@ -23,32 +24,63 @@ class BlackJack:
         return self.player
 
     def single_card(self):
-        self.single = Hand().deal_card()
-        print(self.single)
-        return self.single
+        single = Hand().deal_card()
+        print(single)
+        return single
 
-    def score(self):
-        print("you're now in the score function")
+    def p_score(self):
+        numbers = ['2', '3', '4', '5', '6', '7', '8', '9', '10']
+        faces = ['J', 'Q', 'K', 'j', 'q', 'k']
+        ace = ['a', 'A']
+        for card in self.player:
+            if card[0] in numbers:
+                self.player_score.append(int(card[0]))
+            elif card[0] in faces:
+                self.player_score.append(10)
+            elif card[0] in ace:
+                if sum(self.player_score) <= 10:
+                    self.player_score.append(11)
+                else:
+                    self.player_score.append(1)
+        sum(self.player_score)
+        print(sum(self.player_score))
+
+    def d_score(self):
+        numbers = ['2', '3', '4', '5', '6', '7', '8', '9', '10']
+        faces = ['J', 'Q', 'K', 'j', 'q', 'k']
+        ace = ['a', 'A']
+        for card in self.dealer:
+            if card[0] in numbers:
+                self.dealer_score.append(int(card[0]))
+            elif card[0] in faces:
+                self.dealer_score.append(10)
+            elif card[0] in ace:
+                if sum(self.dealer_score) <= 10:
+                    self.dealer_score.append(11)
+                else:
+                    self.dealer_score.append(1)
+        sum(self.dealer_score)
+        print(sum(self.dealer_score))
 
     def game_play(self):
-        dealer = self.dealer_hand()
-        player = self.player_hand()
+        self.dealer = self.dealer_hand()
+        self.player = self.player_hand()
         print("Welcome to Marginally Awesome Blackjack!")
-        print("Dealer Hand: " + str(dealer))
-        print("Player Hand: " + str(player))
+        print("Dealer Hand: " + str(self.dealer))
+        print("Player Hand: " + str(self.player))
         while self.max_hand < 5:
             hit_stand = input("Do you want to [H]it or [S]tand?").lower()
             self.max_hand += 1
             if hit_stand == "h":
                 new_card = self.single_card()
-                player.append(new_card)
-                print(str(player))
+                self.player.append(new_card)
+                print(str(self.player))
                 continue
             elif hit_stand == "s":
-                self.score()
+                self.p_score()
                 break
         else:
-            self.score()
+            self.p_score()
 
     def play_again(self):
         answer = input("Would you like to play again? Y or N").lower()
