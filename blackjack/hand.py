@@ -10,7 +10,3 @@ class Hand:
     def deal_card(self):
         self.single_card = choice(self.deck)
         return self.single_card
-
-# hand = Hand()
-# print(hand.deck)
-# print(hand.deal_card())

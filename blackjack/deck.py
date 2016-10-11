@@ -11,7 +11,3 @@ class Deck:
             for rank in self.ranks:
                 self.deck.append(rank + suit)
         return self.deck
-
-# cards = Deck()
-# cards.build_deck()
-# print(cards.build_deck)
